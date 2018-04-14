@@ -1,10 +1,11 @@
+import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class UI {
@@ -13,11 +14,9 @@ public class UI {
 	private int window_height;
 	private BorderPane rootLayout;
 	private Stage window;
+	private double dragDeltaX;
+	private double dragDeltaY;
 	
-	public UI() {
-		this.window_width = 1000;
-		this.window_height = 700;
-	}
 	
 	public UI(Stage window, int window_width, int window_height) {
 		this.window_width = window_width;
@@ -34,7 +33,7 @@ public class UI {
 		rootLayout = new BorderPane();
 		makeMenu();
 		Scene root = new Scene(rootLayout, window_width, window_height);
-		root.setFill(Color.GREY);
+		//root.setFill(Color.GREY);
 		return root;
 	}
 
@@ -58,7 +57,37 @@ public class UI {
 	    rootLayout.getChildren().add(menuBar);
 	}
 	
-	public Pane getLayout() {
+	public BorderPane getLayout() {
 		return rootLayout;
+	}
+
+	public void createDragAndZoomEvens(Scene root, Group g) {
+		root.setOnZoom(new EventHandler<ZoomEvent>() {
+			@Override
+			public void handle(ZoomEvent event) {
+				g.setScaleX(g.getScaleX() * event.getZoomFactor());
+				g.setScaleY(g.getScaleY() * event.getZoomFactor());
+			}
+		});
+		
+		root.setOnZoom(e -> {
+			g.setScaleX(g.getScaleX() * e.getZoomFactor());
+			g.setScaleY(g.getScaleY() * e.getZoomFactor());
+		});
+		
+		
+		root.setOnMousePressed(e -> {
+			dragDeltaX = g.getLayoutX() - e.getSceneX();
+			dragDeltaY = g.getLayoutY() - e.getSceneY();
+		});
+		
+		root.setOnMouseDragged(e -> {	
+			g.setLayoutX(e.getSceneX() + dragDeltaX);
+			g.setLayoutY(e.getSceneY() + dragDeltaY);
+		});
+		
+		root.setOnMouseReleased(e -> {
+			//
+		});
 	}
 }

@@ -1,20 +1,22 @@
 import com.aquafx_project.AquaFx;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.ZoomEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	
 	private Stage window;
-	
-	private double dragDeltaX;
-	private double dragDeltaY;
+	private Group g;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -28,52 +30,40 @@ public class Main extends Application {
 		UI ui = new UI(window, 1400,800);
 		Scene root = ui.setUp();
 		
-		window.setScene(root);
-		window.show();
+		g = new Group();
 		
+		ui.createDragAndZoomEvens(root, g);
+
+		/*
 		Circle c = new Circle(50,Color.BLUE);
 		c.setCenterX(500);
 		c.setCenterY(500);
 		Circle c2 = new Circle(20,Color.RED);
 		c2.setCenterX(700);
 		c2.setCenterY(750);
-		Group g = new Group();
 		g.getChildren().addAll(c,c2);
 		ui.getLayout().getChildren().add(g);
-		
-		root.setOnZoom(new EventHandler<ZoomEvent>() {
-			@Override
-			public void handle(ZoomEvent event) {
-				//c.setRadius(c.getRadius() * event.getZoomFactor());
-				//g.s
-				//ui.getLayout().setScaleX(ui.getLayout().getScaleX() * event.getZoomFactor());
-				//ui.getLayout().setScaleY(ui.getLayout().getScaleY() * event.getZoomFactor());
-				g.setScaleX(g.getScaleX() * event.getZoomFactor());
-				g.setScaleY(g.getScaleY() * event.getZoomFactor());
-			}
-		});
-		
-		root.setOnZoom(e -> {
-			g.setScaleX(g.getScaleX() * e.getZoomFactor());
-			g.setScaleY(g.getScaleY() * e.getZoomFactor());
-		});
+		*/
 		
 		
-		root.setOnMousePressed(e -> {
-			dragDeltaX = g.getLayoutX() - e.getSceneX();
-			dragDeltaY = g.getLayoutY() - e.getSceneY();
-		});
+		window.setScene(root);
+		window.show();
 		
-		root.setOnMouseDragged(e -> {	
-			g.setLayoutX(e.getSceneX() + dragDeltaX);
-			g.setLayoutY(e.getSceneY() + dragDeltaY);
-		});
 		
-		root.setOnMouseReleased(e -> {
-			//
-		});
-		//Button b = new Button("OK");
+		UI ui2 = new UI(window, 1400,800);
+		Scene scene2 = ui2.setUp();
+		//ui2.getLayout().setStyle("-fx-background-color: BLACK");
+		Image img = new Image("file:Title.jpg");
+		ui2.getLayout().setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+		//new BackgroundImage("", BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)
+		
+		HBox centerMenu = new HBox();
+		Button b = new Button("OK");
+		centerMenu.getChildren().add(b);
 		//b.setStyle("-fx-background-color: #333333;");
+		ui.getLayout().setCenter(centerMenu);
+		//g.getChildren().add(b);
+		b.setOnAction(e -> window.setScene(scene2));
 		//StackPane layout = new StackPane();
 		//layout.getChildren().add(b);
 		//b.setOnAction(e -> window.setScene(scene2));
