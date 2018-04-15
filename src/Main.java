@@ -13,10 +13,9 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	private Stage window;
-	private Group group;
 	private UI simulationUI;
 	private Scene simulationScene;
-	private Button start;
+	private Button startBtn;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -24,24 +23,19 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		//set Style
 		AquaFx.style();
 		window = primaryStage;
 		
-		makeWelcomeScreen();
-		
-		group = new Group();
+		//make Screens
+		makeWelcomeScreen();	
 		makeSimulationScreen();
 		
-		/*
-		Image img = new Image("file:grid.jpg");
-		ImageView iv = new ImageView();
-		iv.setImage(img);
-		iv.setFitWidth(window.getWidth());
-		iv.setPreserveRatio(true);
-		g.getChildren().add(iv);
-		ui2.getLayout().getChildren().add(g);
-		*/
+		//events
+		startBtn.setOnAction(e -> window.setScene(simulationScene));
 	
+		//for Testing
+		/*
 		Circle c = new Circle(50,Color.BLUE);
 		c.setCenterX(500);
 		c.setCenterY(500);
@@ -50,16 +44,24 @@ public class Main extends Application {
 		c2.setCenterY(750);
 		group.getChildren().addAll(c,c2);
 		simulationUI.getLayout().getChildren().add(group);
-		
-		
-		//Events
-		start.setOnAction(e -> window.setScene(simulationScene));
-		
+		*/
+		/*
+		Image img = new Image("file:grid.gif");
+		ImageView iv = new ImageView();
+		iv.setImage(img);
+		iv.setFitWidth(window.getWidth());
+		iv.setPreserveRatio(true);
+		g.getChildren().add(iv);
+		ui2.getLayout().getChildren().add(g);
+		*/	
 	}
 
 	private void makeSimulationScreen() {
 		simulationUI = new UI(window, 1400,800);
 		simulationScene = simulationUI.setUp();
+		World world1 = new World();
+		Group group = world1.create();
+		simulationUI.getLayout().getChildren().add(group);
 		simulationUI.createDragAndZoomEvens(simulationScene, group);
 		simulationUI.setBackground("grid.gif");
 		//siulationUI.getLayout().setStyle("-fx-background-color: BLACK");
@@ -76,10 +78,10 @@ public class Main extends Application {
 		VBox topMenu = new VBox();
 		Button b = new Button("lol");
 		VBox centerMenu = new VBox();
-		start = new Button("Start");
+		startBtn = new Button("Start");
 		centerMenu.setAlignment(Pos.CENTER);
 		//start.setStyle("-fx-background-color: #333333;");
-		centerMenu.getChildren().addAll(start);
+		centerMenu.getChildren().addAll(startBtn);
 		topMenu.getChildren().addAll(b);
 		
 		//welcomeUI.getLayout().setCenter(centerMenu);
