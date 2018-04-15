@@ -4,7 +4,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.ZoomEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -56,10 +62,6 @@ public class UI {
 		
 	    rootLayout.getChildren().add(menuBar);
 	}
-	
-	public BorderPane getLayout() {
-		return rootLayout;
-	}
 
 	public void createDragAndZoomEvens(Scene root, Group g) {
 		root.setOnZoom(new EventHandler<ZoomEvent>() {
@@ -89,5 +91,18 @@ public class UI {
 		root.setOnMouseReleased(e -> {
 			//
 		});
+	}
+	
+	public void setBackground(String url) {
+		Image img = new Image("file:" + url);
+		rootLayout.setBackground(new Background
+				(new BackgroundImage
+						(img, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
+								BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+		
+	}
+	
+	public BorderPane getLayout() {
+		return this.rootLayout;
 	}
 }
