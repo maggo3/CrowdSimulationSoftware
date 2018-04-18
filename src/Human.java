@@ -6,7 +6,7 @@ import javafx.scene.shape.Circle;
 
 public class Human extends Sprite {
 	
-	public Human(Layer layer, Vec2d location, Vec2d velocity, Vec2d acceleration, double width, double height) {
+	public Human(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration, double width, double height) {
 		super(layer, location, velocity, acceleration, width, height);
 	}
 

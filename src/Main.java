@@ -1,21 +1,33 @@
-import com.aquafx_project.AquaFx;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
+import com.aquafx_project.AquaFx;
+import com.sun.javafx.geom.Vec2d;
+
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	
 	private Stage window;
-	private UI simulationUI;
+	private Scene welcomeScene;
 	private Scene simulationScene;
 	private Button startBtn;
+	
+	static Random random = new Random();
+	Layer playground;
+	//List<Attractor> allAttractors = new ArrayList<Attractor>();
+	List<Human> allHumans = new ArrayList<Human>();
+	
+	AnimationTimer animationTimer;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -27,13 +39,23 @@ public class Main extends Application {
 		AquaFx.style();
 		window = primaryStage;
 		
-		//make Screens
 		makeWelcomeScreen();	
-		makeSimulationScreen();
 		
 		//events
-		startBtn.setOnAction(e -> window.setScene(simulationScene));
+		startBtn.setOnAction(e -> {
+			makeSimulationScreen();
+			window.setScene(simulationScene);
+			setUpGame();
+			
+			for (Sprite human : allHumans) {
+				human.display();
+				System.out.println("X= "+human.getLocation().x + ", Y=" +human.getLocation().y);
+			}
+			
+			startGame();
+		});
 	
+		
 		//for Testing
 		/*
 		Circle c = new Circle(50,Color.BLUE);
@@ -56,37 +78,77 @@ public class Main extends Application {
 		*/	
 	}
 
+	private void startGame() {
+		animationTimer = new AnimationTimer() {
+			
+			@Override
+			public void handle(long now) {
+				allHumans.forEach(Sprite::move);
+				allHumans.forEach(Sprite::display);
+			}
+			
+		};
+		
+		animationTimer.start();
+	}
+
+	private void setUpGame() {
+		//add humans
+        for( int i = 0; i < Settings.HUMAN_COUNT; i++) {
+            addHumans();
+        }
+
+        //add attractors	
+	}
+
+	private void addHumans() {
+		//Layer layer = playground;
+		
+		//random location
+		double x = random.nextDouble() * playground.getWidth();
+		double y = random.nextDouble() * playground.getHeight();
+		
+		//dimension
+		double width = 10; //50 for triangle
+        double height = width / 2.0;
+
+        //create human data
+        Vector2D location = new Vector2D(x,y);
+        Vector2D velocity = new Vector2D(0,0);
+        Vector2D acceleration = new Vector2D(0,0);
+
+        //create sprite and add to layer
+        Human human = new Human(playground, location, velocity, acceleration, width, height);
+
+        //register human
+        allHumans.add(human);
+	}
+
 	private void makeSimulationScreen() {
-		simulationUI = new UI(window, 1400,800);
+		UI simulationUI = new UI(window);
 		simulationScene = simulationUI.setUp();
-		World world1 = new World();
-		Group group = world1.create();
-		simulationUI.getLayout().getChildren().add(group);
-		simulationUI.createDragAndZoomEvens(simulationScene, group);
 		simulationUI.setBackground("grid.gif");
-		//siulationUI.getLayout().setStyle("-fx-background-color: BLACK");
+		BorderPane root = simulationUI.getLayout();
+		playground = new Layer(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+		Pane layerPane = new Pane();
+		layerPane.getChildren().addAll(playground);
+		root.setCenter(layerPane);
+		simulationUI.createDragAndZoomEvens(simulationScene, playground);
 	}
 
 	private void makeWelcomeScreen() {
-		UI welcomeUI = new UI(window, 1400,800);
-		Scene root = welcomeUI.setUp();
+		UI welcomeUI = new UI(window);
+		welcomeScene = welcomeUI.setUp();
 		welcomeUI.setBackground("Title.jpg");	
-		
-		window.setScene(root);
-		window.show();
-		
-		VBox topMenu = new VBox();
-		Button b = new Button("lol");
+
 		VBox centerMenu = new VBox();
 		startBtn = new Button("Start");
 		centerMenu.setAlignment(Pos.CENTER);
 		//start.setStyle("-fx-background-color: #333333;");
 		centerMenu.getChildren().addAll(startBtn);
-		topMenu.getChildren().addAll(b);
-		
-		//welcomeUI.getLayout().setCenter(centerMenu);
-		welcomeUI.getLayout().setTop(topMenu);
 		welcomeUI.getLayout().setCenter(centerMenu);
-		//ystem.out.println(welcomeUI.getLayout());
+		
+		window.setScene(welcomeScene);
+		window.show();
 	}
 }

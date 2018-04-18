@@ -1,13 +1,12 @@
-import com.sun.javafx.geom.Vec2d;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
 public abstract class Sprite extends Region {
 	
-	Vec2d velocity;
-	Vec2d acceleration;
-	Vec2d location;
+	Vector2D velocity;
+	Vector2D acceleration;
+	Vector2D location;
 	
 	//double maxSpeed = Settings.SPRITE_MAX_SPEED;
 	//double maxForce = Settings.SPRITE_MAX_FORCE;
@@ -24,7 +23,7 @@ public abstract class Sprite extends Region {
 	
 	Layer layer = null;
 	
-	public Sprite (Layer layer, Vec2d location, Vec2d velocity, Vec2d acceleration, double width, double height) {
+	public Sprite (Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration, double width, double height) {
 		this.layer = layer;
 		this.location = location;
         this.velocity = velocity;
@@ -43,12 +42,18 @@ public abstract class Sprite extends Region {
 
 	public abstract Node createView();
 	
+	public void move() {
+		//constant speed
+		Vector2D speed = new Vector2D(2,2);
+		location.add(speed);
+	}
+	
 	public void display() {
         relocate(location.x - centerX, location.y - centerY);
         //setRotate(Math.toDegrees(angle));
     }
 	
-	public Vec2d getLocation() {
+	public Vector2D getLocation() {
 		return location;
 	}
 }
