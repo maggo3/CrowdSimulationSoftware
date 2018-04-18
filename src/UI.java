@@ -1,5 +1,4 @@
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -16,17 +15,13 @@ import javafx.stage.Stage;
 
 public class UI {
 
-	private int window_width;
-	private int window_height;
 	private BorderPane rootLayout;
 	private Stage window;
 	private double dragDeltaX;
 	private double dragDeltaY;
 	
 	
-	public UI(Stage window, int window_width, int window_height) {
-		this.window_width = window_width;
-		this.window_height = window_height;
+	public UI(Stage window) {
 		this.window = window;
 	}
 
@@ -38,7 +33,7 @@ public class UI {
 		});
 		rootLayout = new BorderPane();
 		makeMenu();
-		Scene root = new Scene(rootLayout, window_width, window_height);
+		Scene root = new Scene(rootLayout, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 		//root.setFill(Color.GREY);
 		return root;
 	}
@@ -63,7 +58,7 @@ public class UI {
 	    rootLayout.getChildren().add(menuBar);
 	}
 
-	public void createDragAndZoomEvens(Scene root, Group g) {
+	public void createDragAndZoomEvens(Scene root, Layer g) {
 		root.setOnZoom(new EventHandler<ZoomEvent>() {
 			@Override
 			public void handle(ZoomEvent event) {
