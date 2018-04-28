@@ -3,13 +3,13 @@ import java.util.List;
 import java.util.Random;
 
 import com.aquafx_project.AquaFx;
-import com.sun.javafx.geom.Vec2d;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -18,16 +18,17 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	private Stage window;
-	private Scene welcomeScene;
-	private Scene simulationScene;
+	private Scene welcomeScene, simulationScene;
 	private Button startBtn;
+	private Label frameLbl;
 	
 	static Random random = new Random();
 	Layer playground;
 	//List<Attractor> allAttractors = new ArrayList<Attractor>();
 	List<Human> allHumans = new ArrayList<Human>();
 	
-	AnimationTimer animationTimer;
+	private AnimationTimer animationTimer;
+	private long lastTime, diffTime;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -83,8 +84,14 @@ public class Main extends Application {
 			
 			@Override
 			public void handle(long now) {
+				
+				diffTime = 1000000000 / (now - lastTime);
+				frameLbl.setText("FPS: " + diffTime);
+				
 				allHumans.forEach(Sprite::move);
 				allHumans.forEach(Sprite::display);
+				
+				lastTime = now;
 			}
 			
 		};
@@ -99,6 +106,7 @@ public class Main extends Application {
         }
 
         //add attractors	
+        
 	}
 
 	private void addHumans() {
@@ -131,7 +139,9 @@ public class Main extends Application {
 		BorderPane root = simulationUI.getLayout();
 		playground = new Layer(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 		Pane layerPane = new Pane();
-		layerPane.getChildren().addAll(playground);
+		frameLbl = new Label("FPS: 0");
+		frameLbl.setStyle("-fx-padding: 10px");
+		layerPane.getChildren().addAll(playground, frameLbl);
 		root.setCenter(layerPane);
 		simulationUI.createDragAndZoomEvens(simulationScene, playground);
 	}
