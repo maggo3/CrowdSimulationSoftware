@@ -1,5 +1,11 @@
+package rules;
 
 import java.util.ArrayList;
+
+import basic.Human;
+import basic.Settings;
+import basic.Utils;
+import basic.Vector2D;
 
 public class Rule {
 	

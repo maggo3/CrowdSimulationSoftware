@@ -1,5 +1,8 @@
+package basic;
 import java.util.ArrayList;
 import java.util.Random;
+
+import rules.Rule;
 
 public class Flock {
 	
