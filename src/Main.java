@@ -10,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -89,22 +88,13 @@ public class Main extends Application {
 	}
 
 	private void addListeners() {
-		 // capture mouse position
-//        simulationScene.addEventFilter(MouseEvent.ANY, e -> {
-//            mouseLocation.set(e.getX(), e.getY());
-//        });
-//
-//        // move attractors via mouse
-//        for( Attractor attractor: allAttractors) {
-//            mouseGestures.makeDraggable(attractor);
-//        }
 		simulationScene.setOnMousePressed(e -> {
 			mouseLocation.x = e.getX();
 			mouseLocation.y = e.getY();
-			System.out.println(mouseLocation);
+			//System.out.println(mouseLocation);
 			
 			allAttractors.get(0).setLocation(mouseLocation.x, mouseLocation.y);
-			allAttractors.get(0).display();
+			//allAttractors.get(0).display();
 		});
 		
 		
@@ -120,13 +110,19 @@ public class Main extends Application {
 				frameLbl.setText("FPS: " + diffTime);
 				
 				//Logic
-				Attractor attractor = allAttractors.get(0);
+				//Attractor attractor = allAttractors.get(0);
 				allHumans.forEach(human -> {
-					human.seek(attractor.getLocation());
+					//human.seek(attractor.getLocation());
+					allAttractors.forEach(attractor -> {
+						human.seek(attractor.getLocation());
+					});
+					human.move();
+					human.display();
 				});
 				
-				allHumans.forEach(Sprite::move);
-				allHumans.forEach(Sprite::display);
+				//allHumans.forEach(Sprite::move);
+				//allHumans.forEach(Sprite::display);
+				allAttractors.forEach(Sprite::display);
 				
 				//FPS
 				lastTime = now;
@@ -144,17 +140,19 @@ public class Main extends Application {
         }
 
         //add attractors	
-        for( int i = 0; i < Settings.ATTRACTOR_COUNT; i++) {
+        for( int i = 0; i < Settings.ATTRACTOR_COUNT; i++) { //Settings.ATTRACTOR_COUNT
             addAttractors();
         }
 	}
 
 	private void addAttractors() {
-		Layer layer = playground;
+		//Layer layer = playground;
 		
 		//center Attractor
-		double x = 100; //playground.getWidth()/2;
-		double y = 100; //playground.getHeight()/2;
+		//double x = 100; //playground.getWidth()/2;
+		//double y = 100; //playground.getHeight()/2;
+		double x = random.nextDouble() * playground.getWidth();
+		double y = random.nextDouble() * playground.getHeight();
 		
 		//dimensions
 		double width = 10; //100
@@ -166,14 +164,14 @@ public class Main extends Application {
 		Vector2D acceleration = new Vector2D(0,0);
 		
 		//add Attractor and add to layer
-		Attractor attractor = new Attractor(layer, location, velocity, acceleration, width, height);
+		Attractor attractor = new Attractor(playground, location, velocity, acceleration, width, height);
 		
 		//register Attractor
 		allAttractors.add(attractor);		
 	}
 
 	private void addHumans() {
-		Layer layer = playground;
+		//Layer layer = playground;
 		
 		//random location
 		double x = random.nextDouble() * playground.getWidth();
@@ -189,7 +187,7 @@ public class Main extends Application {
         Vector2D acceleration = new Vector2D(0,0);
 
         //create sprite and add to layer
-        Human human = new Human(layer, location, velocity, acceleration, width, height);
+        Human human = new Human(playground, location, velocity, acceleration, width, height);
 
         //register human
         allHumans.add(human);
