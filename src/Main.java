@@ -145,6 +145,7 @@ public class Main extends Application {
         //add FlockManager
         flockManager = new FlockManager();
         Flock f1 = new Flock(Settings.HUMAN_COUNT, playground);
+        f1.addRule(new Rule() );
         //f1.addRule(new AimAttractor(1, f1));
         //f1.addRule(new KeepDistance(40, f1));
         flockManager.add(f1);

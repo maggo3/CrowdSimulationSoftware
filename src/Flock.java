@@ -42,7 +42,9 @@ public class Flock {
 
 	public void update() {
 		for ( Human h : flock) {
-			h.seek(new Vector2D(200,200));
+			//h.seek(new Vector2D(200,200));
+			calculateVelocity(h);
+			//limiSpeed(h);
 		}
 		for ( Human h : flock) {
 			h.move();
@@ -50,6 +52,19 @@ public class Flock {
 		}
 	}
 	
+	private void limiSpeed(Human h) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void calculateVelocity(Human h) {
+		Vector2D change = new Vector2D(0,0);
+		for (Rule r : rules) {
+			change.add(r.getChangeVector(h, flock)); 
+		}
+		h.setVelocity(change);
+	}
+
 	public void addRule(Rule r) {
 		rules.add(r);
 	}
