@@ -28,6 +28,7 @@ public class Main extends Application {
 	Layer playground;
 	List<Attractor> allAttractors = new ArrayList<Attractor>();
 	List<Human> allHumans = new ArrayList<Human>();
+	private FlockManager flockManager;
 	
 	private AnimationTimer animationTimer;
 	private long lastTime, diffTime;
@@ -110,18 +111,20 @@ public class Main extends Application {
 				frameLbl.setText("FPS: " + diffTime);
 				
 				//Logic
-				//Attractor attractor = allAttractors.get(0);
-				allHumans.forEach(human -> {
-					//human.seek(attractor.getLocation());
-					allAttractors.forEach(attractor -> {
-						human.seek(attractor.getLocation());
-					});
-					human.move();
-					human.display();
-				});
+				flockManager.update();
 				
-				//allHumans.forEach(Sprite::move);
-				//allHumans.forEach(Sprite::display);
+/**
+ * this is an old method that works with more attractors
+ */
+//				allHumans.forEach(human -> {
+//					//human.seek(attractor.getLocation());
+//					allAttractors.forEach(attractor -> {
+//						human.seek(attractor.getLocation());
+//					});
+//					human.move();
+//					human.display();
+//				});
+				
 				allAttractors.forEach(Sprite::display);
 				
 				//FPS
@@ -134,15 +137,18 @@ public class Main extends Application {
 	}
 
 	private void setUpGame() {
-		//add humans
-        for( int i = 0; i < Settings.HUMAN_COUNT; i++) { 
-            addHumans();
-        }
-
         //add attractors	
         for( int i = 0; i < Settings.ATTRACTOR_COUNT; i++) { //Settings.ATTRACTOR_COUNT
             addAttractors();
         }
+        
+        //add FlockManager
+        flockManager = new FlockManager();
+        Flock f1 = new Flock(Settings.HUMAN_COUNT, playground);
+        //f1.addRule(new AimAttractor(1, f1));
+        //f1.addRule(new KeepDistance(40, f1));
+        flockManager.add(f1);
+        
 	}
 
 	private void addAttractors() {

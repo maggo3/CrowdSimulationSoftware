@@ -56,5 +56,9 @@ public class Vector2D {
 		this.x = x2;
 		this.y = y2;
 	}
+
+	public double heading2D() {
+		return Math.atan2(y, x);
+	}
 	
 }
