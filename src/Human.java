@@ -11,7 +11,8 @@ public class Human extends Sprite {
 	@Override
 	public Node createView() {
 		//return Utils.createArrowImageView( (int) width);
-		Circle c = new Circle(10, Color.GREEN);
+		//size Human 0.5 minimun to see
+		Circle c = new Circle(10, Color.BLUE);
 		return c;
 	}
 }

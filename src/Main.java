@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -22,9 +23,11 @@ public class Main extends Application {
 	private Button startBtn;
 	private Label frameLbl;
 	
+	Vector2D mouseLocation = new Vector2D( 0, 0);
+	
 	static Random random = new Random();
 	Layer playground;
-	//List<Attractor> allAttractors = new ArrayList<Attractor>();
+	List<Attractor> allAttractors = new ArrayList<Attractor>();
 	List<Human> allHumans = new ArrayList<Human>();
 	
 	private AnimationTimer animationTimer;
@@ -50,8 +53,14 @@ public class Main extends Application {
 			
 			for (Sprite human : allHumans) {
 				human.display();
-				System.out.println("X= "+human.getLocation().x + ", Y=" +human.getLocation().y);
+				//System.out.println("HUMAN: X= "+human.getLocation().x + ", Y=" +human.getLocation().y);
 			}
+			allAttractors.forEach(a -> {
+				a.display();
+				//System.out.println("ATTRACTOR: X= "+a.getLocation().x + ", Y=" +a.getLocation().y);
+			});
+			
+			addListeners();
 			
 			startGame();
 		});
@@ -79,18 +88,47 @@ public class Main extends Application {
 		*/	
 	}
 
+	private void addListeners() {
+		 // capture mouse position
+//        simulationScene.addEventFilter(MouseEvent.ANY, e -> {
+//            mouseLocation.set(e.getX(), e.getY());
+//        });
+//
+//        // move attractors via mouse
+//        for( Attractor attractor: allAttractors) {
+//            mouseGestures.makeDraggable(attractor);
+//        }
+		simulationScene.setOnMousePressed(e -> {
+			mouseLocation.x = e.getX();
+			mouseLocation.y = e.getY();
+			System.out.println(mouseLocation);
+			
+			allAttractors.get(0).setLocation(mouseLocation.x, mouseLocation.y);
+			allAttractors.get(0).display();
+		});
+		
+		
+	}
+
 	private void startGame() {
 		animationTimer = new AnimationTimer() {
 			
 			@Override
 			public void handle(long now) {
-				
+				//FPS
 				diffTime = 1000000000 / (now - lastTime);
 				frameLbl.setText("FPS: " + diffTime);
+				
+				//Logic
+				Attractor attractor = allAttractors.get(0);
+				allHumans.forEach(human -> {
+					human.seek(attractor.getLocation());
+				});
 				
 				allHumans.forEach(Sprite::move);
 				allHumans.forEach(Sprite::display);
 				
+				//FPS
 				lastTime = now;
 			}
 			
@@ -101,16 +139,41 @@ public class Main extends Application {
 
 	private void setUpGame() {
 		//add humans
-        for( int i = 0; i < Settings.HUMAN_COUNT; i++) {
+        for( int i = 0; i < Settings.HUMAN_COUNT; i++) { 
             addHumans();
         }
 
         //add attractors	
-        
+        for( int i = 0; i < Settings.ATTRACTOR_COUNT; i++) {
+            addAttractors();
+        }
+	}
+
+	private void addAttractors() {
+		Layer layer = playground;
+		
+		//center Attractor
+		double x = 100; //playground.getWidth()/2;
+		double y = 100; //playground.getHeight()/2;
+		
+		//dimensions
+		double width = 10; //100
+		double height = 10; //100
+		
+		//create Attractor data
+		Vector2D location = new Vector2D(x,y);
+		Vector2D velocity = new Vector2D(0,0);
+		Vector2D acceleration = new Vector2D(0,0);
+		
+		//add Attractor and add to layer
+		Attractor attractor = new Attractor(layer, location, velocity, acceleration, width, height);
+		
+		//register Attractor
+		allAttractors.add(attractor);		
 	}
 
 	private void addHumans() {
-		//Layer layer = playground;
+		Layer layer = playground;
 		
 		//random location
 		double x = random.nextDouble() * playground.getWidth();
@@ -126,7 +189,7 @@ public class Main extends Application {
         Vector2D acceleration = new Vector2D(0,0);
 
         //create sprite and add to layer
-        Human human = new Human(playground, location, velocity, acceleration, width, height);
+        Human human = new Human(layer, location, velocity, acceleration, width, height);
 
         //register human
         allHumans.add(human);
@@ -143,7 +206,7 @@ public class Main extends Application {
 		frameLbl.setStyle("-fx-padding: 10px");
 		layerPane.getChildren().addAll(playground, frameLbl);
 		root.setCenter(layerPane);
-		simulationUI.createDragAndZoomEvens(simulationScene, playground);
+		//simulationUI.createDragAndZoomEvens(simulationScene, playground);
 	}
 
 	private void makeWelcomeScreen() {

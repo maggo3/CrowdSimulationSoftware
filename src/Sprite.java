@@ -8,8 +8,8 @@ public abstract class Sprite extends Region {
 	Vector2D acceleration;
 	Vector2D location;
 	
-	//double maxSpeed = Settings.SPRITE_MAX_SPEED;
-	//double maxForce = Settings.SPRITE_MAX_FORCE;
+	double maxSpeed = Settings.SPRITE_MAX_SPEED;
+	double maxForce = Settings.SPRITE_MAX_FORCE;
 	
 	Node view;
 	
@@ -44,8 +44,16 @@ public abstract class Sprite extends Region {
 	
 	public void move() {
 		//constant speed
-		Vector2D speed = new Vector2D(2,2);
-		location.add(speed);
+		//Vector2D speed = new Vector2D(0.08,0.08);
+		//location.add(speed);
+		
+		velocity.add(acceleration);
+		
+		velocity.limit(maxSpeed);
+		
+		location.add(velocity);
+		
+		acceleration.multiply(0);
 	}
 	
 	public void display() {
@@ -55,5 +63,39 @@ public abstract class Sprite extends Region {
 	
 	public Vector2D getLocation() {
 		return location;
+	}
+	
+	public void setLocation(double x, double y) {
+		location.x = x;
+		location.y = y;
+	}
+	
+	public void seek(Vector2D target) {
+		Vector2D path = Vector2D.substract(target, location);
+		
+		double distance = path.distance();
+		path.normalize();
+		
+		if (distance < Settings.SPRITE_SLOW_DOWN_DISTANCE) {
+			//from 0 to 2
+			double m = Utils.map(distance, 0, Settings.SPRITE_SLOW_DOWN_DISTANCE, 0, maxSpeed);
+			path.multiply(m);
+		} else {
+			path.multiply(maxSpeed);
+		}
+		
+		Vector2D steer = Vector2D.substract(path, velocity);
+		steer.limit(maxForce);
+		
+		applyForce(steer);
+	}
+
+	private void applyForce(Vector2D force) {
+		acceleration.add(force);
+	}
+
+	public void setLocationOffset(double offsetX, double offsetY) {
+		location.x += offsetX;
+        location.y += offsetY;
 	}
 }

@@ -12,7 +12,8 @@ import javafx.scene.shape.StrokeLineJoin;
 public class Utils {
 
     public static double map(double value, double currentRangeStart, double currentRangeStop, double targetRangeStart, double targetRangeStop) {
-        return targetRangeStart + (targetRangeStop - targetRangeStart) * ((value - currentRangeStart) / (currentRangeStop - currentRangeStart));
+        // 2(maxspeed) * distance / 100(slowDownDistance)
+    	return targetRangeStart + (targetRangeStop - targetRangeStart) * ((value - currentRangeStart) / (currentRangeStop - currentRangeStart));
     }
 
     /**
