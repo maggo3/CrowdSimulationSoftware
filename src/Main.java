@@ -181,7 +181,7 @@ public class Main extends Application {
 		
 		//dimension
 		double width = 10; //50 for triangle
-        double height = width / 2.0;
+        double height = 10; //width / 2.0; 
 
         //create human data
         Vector2D location = new Vector2D(x,y);
