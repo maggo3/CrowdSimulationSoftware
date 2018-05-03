@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import rules.AimAttractorRule;
+import rules.KeepDistanceRule;
 import rules.Rule;
 
 public class Main extends Application {
@@ -149,7 +150,7 @@ public class Main extends Application {
         flockManager = new FlockManager();
         Flock f1 = new Flock(Settings.HUMAN_COUNT, playground);
         f1.addRule(new AimAttractorRule(allAttractors.get(0)));
-        //f1.addRule(new KeepDistance(40, f1));
+        f1.addRule(new KeepDistanceRule(50, f1));
         flockManager.add(f1);
         
 	}

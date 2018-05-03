@@ -15,6 +15,11 @@ public class Vector2D {
 		y += v.y;
 	}
 	
+	public void sub(Vector2D v) {
+		x -= v.x;
+		y -= v.y;
+	}
+	
 	static public Vector2D substract(Vector2D target, Vector2D start) {
 		return new Vector2D(target.x - start.x, target.y - start.y);
 	}
