@@ -48,21 +48,18 @@ public abstract class Sprite extends Region {
 		//Vector2D speed = new Vector2D(0.08,0.08);
 		//location.add(speed);
 		
-		//velocity.add(acceleration);
-		
 		//velocity.limit(maxSpeed);
-		
 		
 		location.add(velocity);
 		
-		angle = velocity.heading2D();
+		//angle = velocity.heading2D();
 		
 		//acceleration.multiply(0);
 	}
 	
 	public void display() {
         relocate(location.x - centerX, location.y - centerY);
-        setRotate(Math.toDegrees(angle));
+        //setRotate(Math.toDegrees(angle));
     }
 	
 	public Vector2D getLocation() {

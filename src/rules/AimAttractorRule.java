@@ -2,6 +2,7 @@ package rules;
 
 import java.util.ArrayList;
 
+import basic.Attractor;
 import basic.Human;
 import basic.Settings;
 import basic.Utils;
@@ -9,11 +10,15 @@ import basic.Vector2D;
 
 public class AimAttractorRule extends Rule {
 	
-	private Vector2D target = new Vector2D(200,200);
+	private Attractor attractor;
+	
+	public AimAttractorRule(Attractor attr) {
+		this.attractor = attr;
+	}
 
 	@Override
 	public Vector2D change(Human h, ArrayList<Human> flock) {
-		Vector2D path = Vector2D.substract(target, h.getLocation());
+		Vector2D path = Vector2D.substract(attractor.getLocation(), h.getLocation());
 		
 		double distance = path.distance();
 		path.normalize();
