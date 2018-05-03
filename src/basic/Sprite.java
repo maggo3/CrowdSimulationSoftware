@@ -49,13 +49,13 @@ public abstract class Sprite extends Region {
 		//location.add(speed);
 		
 		//velocity.add(acceleration)
-		//velocity.limit(maxSpeed);
+		velocity.limit(maxSpeed);
 		
 		location.add(velocity);
 		
 		//angle = velocity.heading2D();
 		
-		//acceleration.multiply(0);
+		acceleration.multiply(0);
 	}
 	
 	public void display() {
@@ -103,7 +103,10 @@ public abstract class Sprite extends Region {
 	
 	public void setVelocity(Vector2D vel) {
 		velocity = vel;
-		//velocity.add(vel);
+	}
+	
+	public void addVelocity(Vector2D vel) {
+		velocity.add(vel);
 	}
 	
 	public Vector2D getVelocity() {

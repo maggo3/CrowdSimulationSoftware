@@ -51,10 +51,10 @@ public class Vector2D {
 		y *= m;
 	}
 
-	public void limit(double maxForce) {
-		if ( distance() > maxForce) {
+	public void limit(double maxLength) {
+		if ( distance() > maxLength) {
 			normalize();
-			multiply(maxForce);
+			multiply(maxLength);
 		}
 	}
 

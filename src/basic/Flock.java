@@ -70,7 +70,7 @@ public class Flock {
 		if ( h == flock.get(0)) {
 			//System.out.println(change);
 		}
-		h.setVelocity(change);
+		h.addVelocity(change);
 	}
 
 	public void addRule(Rule r) {
