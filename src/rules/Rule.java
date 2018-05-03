@@ -7,32 +7,23 @@ import basic.Settings;
 import basic.Utils;
 import basic.Vector2D;
 
-public class Rule {
+public abstract class Rule {
 	
-	private Vector2D target = new Vector2D(200,200);
+	private double weight;
+	
+	public Rule() {
+		this.weight = 1;
+	}
+	
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+	
+	
 
 	public Vector2D getChangeVector(Human h, ArrayList<Human> flock) {
-		
-		Vector2D path = Vector2D.substract(target, h.getLocation());
-		
-		double distance = path.distance();
-		path.normalize();
-		
-		if (distance < Settings.SPRITE_SLOW_DOWN_DISTANCE) {
-			//from 0 to 2
-			double m = Utils.map(distance, 0, Settings.SPRITE_SLOW_DOWN_DISTANCE, 0, 2);
-			path.multiply(m);
-		} else {
-			path.multiply(2);
-		}
-		
-		Vector2D steer = Vector2D.substract(path, h.getVelocity());
-		steer.limit(0.1);
-		
-		Vector2D accel = h.getAcceleration();
-		accel.add(steer);
-		
-		return accel;
+		return Vector2D.multScalar(change(h,flock),weight);
 	}
-
+	
+	public abstract Vector2D change(Human h, ArrayList<Human> flock);
 }

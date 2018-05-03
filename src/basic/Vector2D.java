@@ -61,5 +61,11 @@ public class Vector2D {
 	public double heading2D() {
 		return Math.atan2(y, x);
 	}
+
+	public static Vector2D multScalar(Vector2D v, double w) {
+		double x = v.x * w;
+		double y = v.y * w;
+		return new Vector2D(x,y);
+	}
 	
 }
