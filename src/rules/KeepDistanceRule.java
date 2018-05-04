@@ -46,10 +46,10 @@ public class KeepDistanceRule extends Rule {
 		for (Human other : flock) {
 			Vector2D path = Vector2D.substract(human.getLocation(), other.getLocation());
 			double d = path.distance();
-			if ( d>0 && d < DISTANCE) {
+			if ( (d > 0) && (d < DISTANCE)) {
 				Vector2D diff = Vector2D.substract(human.getLocation(), other.getLocation());
 				diff.normalize();
-				diff.multiply(1/d);
+				diff.div(d);
 				steer.add(diff);
 				count++;
 			}

@@ -143,15 +143,15 @@ public class Main extends Application {
 
 	private void setUpGame() {
         //add attractors	
-        for( int i = 0; i < Settings.ATTRACTOR_COUNT; i++) { //Settings.ATTRACTOR_COUNT
+        for( int i = 0; i < Settings.ATTRACTOR_COUNT; i++) {
             addAttractors();
         }
         
         //add FlockManager
         flockManager = new FlockManager();
         Flock f1 = new Flock(Settings.HUMAN_COUNT, playground);
-        //f1.addRule(new AimAttractorRule(allAttractors.get(0)));
-        //f1.addRule(new KeepDistanceRule(50, f1));
+        f1.addRule(new AimAttractorRule(allAttractors.get(0)));
+        f1.addRule(new KeepDistanceRule(100, f1));
         f1.addRule(new CohesionRule());
         flockManager.add(f1);
         

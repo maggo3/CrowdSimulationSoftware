@@ -37,6 +37,6 @@ public class AimAttractorRule extends Rule {
 		Vector2D accel = h.getAcceleration();
 		accel.add(steer);
 		
-		return accel.multScalar(accel, 0.5);
+		return Vector2D.multScalar(accel, 0.5);
 	}
 }

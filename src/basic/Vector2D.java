@@ -36,7 +36,7 @@ public class Vector2D {
 		}
 	}
 
-	private void div(double d) {
+	public void div(double d) {
 		x /= d;
 		y /= d;
 	}
