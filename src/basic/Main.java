@@ -25,15 +25,12 @@ public class Main extends Application {
 	private Scene welcomeScene, simulationScene;
 	private Button startBtn;
 	private Label frameLbl;
-	
 	Vector2D mouseLocation = new Vector2D( 0, 0);
-	
 	static Random random = new Random();
 	Layer playground;
 	List<Attractor> allAttractors = new ArrayList<Attractor>();
 	List<Human> allHumans = new ArrayList<Human>();
 	private FlockManager flockManager;
-	
 	private AnimationTimer animationTimer;
 	private long lastTime, diffTime;
 	

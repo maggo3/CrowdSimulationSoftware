@@ -17,8 +17,6 @@ public abstract class Rule {
 		this.weight = weight;
 	}
 	
-	
-
 	public Vector2D getChangeVector(Human h, ArrayList<Human> flock) {
 		return Vector2D.multScalar(change(h,flock),weight);
 	}
