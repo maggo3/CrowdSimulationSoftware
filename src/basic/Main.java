@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import rules.AimAttractorRule;
+import rules.AvoidObstacleRule;
 import rules.CohesionRule;
 import rules.KeepDistanceRule;
 
@@ -30,6 +31,7 @@ public class Main extends Application {
 	Layer playground;
 	List<Attractor> allAttractors = new ArrayList<Attractor>();
 	List<Human> allHumans = new ArrayList<Human>();
+	List<Avoid> allAvoids = new ArrayList<Avoid>();
 	private FlockManager flockManager;
 	private AnimationTimer animationTimer;
 	private long lastTime, diffTime;
@@ -105,6 +107,7 @@ public class Main extends Application {
 //				});
 				
 				allAttractors.forEach(Sprite::display);
+				allAvoids.forEach(Sprite::display);
 				
 				//FPS
 				lastTime = now;
@@ -116,9 +119,14 @@ public class Main extends Application {
 	}
 
 	private void setUpGame() {
-        //add attractors	
-        for( int i = 0; i < Settings.ATTRACTOR_COUNT; i++) {
+        //add Attractors	
+        for(int i = 0; i < Settings.ATTRACTOR_COUNT; i++) {
             addAttractors();
+        }
+        
+        //add Avoids
+        for (int i = 0; i < Settings.AVOID_COUNT; i++) {
+            addAvoid();
         }
         
         //add FlockManager
@@ -127,8 +135,32 @@ public class Main extends Application {
         f1.addRule(new AimAttractorRule(allAttractors.get(0)));
         f1.addRule(new KeepDistanceRule(30, f1));
         f1.addRule(new CohesionRule(200));
+        f1.addRule(new AvoidObstacleRule(70, allAvoids));
         flockManager.add(f1);
         
+	}
+
+	private void addAvoid() {
+		//Layer layer = playground;
+		
+		//center Avoid
+		double x = playground.getWidth()/2;
+		double y = playground.getHeight()/2;
+		
+		//dimensions
+		double width = 10; //100
+		double height = 10; //100
+		
+		//create Attractor data
+		Vector2D location = new Vector2D(x,y);
+		Vector2D velocity = new Vector2D(0,0);
+		Vector2D acceleration = new Vector2D(0,0);
+		
+		//add Attractor and add to layer
+		Avoid avoid = new Avoid(playground, location, velocity, acceleration, width, height);
+		
+		//register Avoid
+		allAvoids.add(avoid);
 	}
 
 	private void addAttractors() {
