@@ -7,6 +7,12 @@ import basic.Vector2D;
 
 public class CohesionRule extends Rule {
 	
+	private final int DISTANCE;
+	
+	public CohesionRule(int distance) {
+		this.DISTANCE = distance;
+	}
+	
 	@Override
 	public Vector2D change(Human human, ArrayList<Human> flock) {
 		
@@ -17,7 +23,7 @@ public class CohesionRule extends Rule {
 			Vector2D path = Vector2D.substract(other.getLocation(), human.getLocation());
 			double d = path.distance();
 			
-			if ((d > 0) && (d < 200)) {
+			if ((d > 0) && (d < DISTANCE)) {
 				sum.add(other.getLocation());
 				count++;
 			}
@@ -31,8 +37,6 @@ public class CohesionRule extends Rule {
 		} else {
 			return new Vector2D(0,0);
 		}
-		
 	}
 
-	
 }
