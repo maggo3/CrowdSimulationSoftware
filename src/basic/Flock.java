@@ -55,20 +55,17 @@ public class Flock {
 		}
 	}
 	
+	/*
 	private void limiSpeed(Human h) {
 		// TODO Auto-generated method stub
 		
 	}
+	*/
 
 	private void calculateVelocity(Human h) {
 		Vector2D change = new Vector2D(0,0);
 		for (Rule r : rules) {
-			//Vector2D v = r.getChangeVector(h, flock);
-			//change.set(v.x, v.y);
 			change.add(r.getChangeVector(h, flock)); 
-		}
-		if ( h == flock.get(0)) {
-			//System.out.println(change);
 		}
 		h.addVelocity(change);
 	}

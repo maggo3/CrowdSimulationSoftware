@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import rules.AimAttractorRule;
 import rules.CohesionRule;
 import rules.KeepDistanceRule;
-import rules.Rule;
 
 public class Main extends Application {
 	
@@ -58,39 +57,17 @@ public class Main extends Application {
 			
 			for (Sprite human : allHumans) {
 				human.display();
-				//System.out.println("HUMAN: X= "+human.getLocation().x + ", Y=" +human.getLocation().y);
 			}
 			allAttractors.forEach(a -> {
 				a.display();
-				//System.out.println("ATTRACTOR: X= "+a.getLocation().x + ", Y=" +a.getLocation().y);
 			});
 			
+			//listeners
 			addListeners();
 			
+			//start the simulation
 			startGame();
 		});
-	
-		
-		//for Testing
-		/*
-		Circle c = new Circle(50,Color.BLUE);
-		c.setCenterX(500);
-		c.setCenterY(500);
-		Circle c2 = new Circle(20,Color.RED);
-		c2.setCenterX(700);
-		c2.setCenterY(750);
-		group.getChildren().addAll(c,c2);
-		simulationUI.getLayout().getChildren().add(group);
-		*/
-		/*
-		Image img = new Image("file:grid.gif");
-		ImageView iv = new ImageView();
-		iv.setImage(img);
-		iv.setFitWidth(window.getWidth());
-		iv.setPreserveRatio(true);
-		g.getChildren().add(iv);
-		ui2.getLayout().getChildren().add(g);
-		*/	
 	}
 
 	private void addListeners() {
@@ -180,29 +157,6 @@ public class Main extends Application {
 		
 		//register Attractor
 		allAttractors.add(attractor);		
-	}
-
-	private void addHumans() {
-		//Layer layer = playground;
-		
-		//random location
-		double x = random.nextDouble() * playground.getWidth();
-		double y = random.nextDouble() * playground.getHeight();
-		
-		//dimension
-		double width = 10; //50 for triangle
-        double height = 10; //width / 2.0; 
-
-        //create human data
-        Vector2D location = new Vector2D(x,y);
-        Vector2D velocity = new Vector2D(0,0);
-        Vector2D acceleration = new Vector2D(0,0);
-
-        //create sprite and add to layer
-        Human human = new Human(playground, location, velocity, acceleration, width, height);
-
-        //register human
-        allHumans.add(human);
 	}
 
 	private void makeSimulationScreen() {

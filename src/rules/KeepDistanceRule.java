@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import basic.Flock;
 import basic.Human;
-import basic.Settings;
-import basic.Utils;
 import basic.Vector2D;
 
 public class KeepDistanceRule extends Rule {
@@ -33,6 +31,9 @@ public class KeepDistanceRule extends Rule {
 				steer.add(path);
 				count++;
 			}
+		}
+		if (count > 0) {
+			//steer.div(count);
 		}
 		return Vector2D.multScalar(steer, 0.5);
 	}

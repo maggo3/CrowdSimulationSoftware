@@ -44,17 +44,10 @@ public abstract class Sprite extends Region {
 	public abstract Node createView();
 	
 	public void move() {
-		//constant speed
-		//Vector2D speed = new Vector2D(0.08,0.08);
-		//location.add(speed);
-		
 		//velocity.add(acceleration)
 		velocity.limit(maxSpeed);
-		
 		location.add(velocity);
-		
 		//angle = velocity.heading2D();
-		
 		acceleration.multiply(0);
 	}
 	
@@ -63,15 +56,7 @@ public abstract class Sprite extends Region {
         //setRotate(Math.toDegrees(angle));
     }
 	
-	public Vector2D getLocation() {
-		return location;
-	}
-	
-	public void setLocation(double x, double y) {
-		location.x = x;
-		location.y = y;
-	}
-	
+	/*
 	public void seek(Vector2D target) {
 		Vector2D path = Vector2D.substract(target, location);
 		
@@ -91,14 +76,30 @@ public abstract class Sprite extends Region {
 		
 		applyForce(steer);
 	}
+	*/
 
+	/*
 	private void applyForce(Vector2D force) {
 		acceleration.add(force);
 	}
+	*/
 
+	public Vector2D getLocation() {
+		return location;
+	}
+	
+	public void setLocation(double x, double y) {
+		location.x = x;
+		location.y = y;
+	}
+	
 	public void setLocationOffset(double offsetX, double offsetY) {
 		location.x += offsetX;
         location.y += offsetY;
+	}
+	
+	public Vector2D getVelocity() {
+		return velocity;
 	}
 	
 	public void setVelocity(Vector2D vel) {
@@ -108,11 +109,7 @@ public abstract class Sprite extends Region {
 	public void addVelocity(Vector2D vel) {
 		velocity.add(vel);
 	}
-	
-	public Vector2D getVelocity() {
-		return velocity;
-	}
-	
+		
 	public Vector2D getAcceleration() {
 		return acceleration;
 	}
