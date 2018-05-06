@@ -1,28 +1,41 @@
 package basic;
-import javafx.scene.Group;
+
+import javafx.scene.Node;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
-public class World {
+public class World extends Region {
 	
-	private Group g;
+	private Node view;
+	private Rectangle rect;
 	
-	public World() {
-		
+	public World(Layer layer) {
+		//double width = layer.getWidth();
+		//double height = layer.getHeight();
+		//setPrefSize(width, height);
+        this.view = createView();
+        
+        getChildren().add(view);
+        layer.getChildren().add(this);
 	}
-
-	public Group create() {
-		g = new Group();
-		
-		Circle c = new Circle(50,Color.BLUE);
-		c.setCenterX(500);
-		c.setCenterY(500);
-		Circle c2 = new Circle(20,Color.RED);
-		c2.setCenterX(700);
-		c2.setCenterY(750);
-		g.getChildren().addAll(c,c2);
-		//simulationUI.getLayout().getChildren().add(group);
-		
-		return g;
+	
+//	public void display() {
+//        //relocate(location.x - centerX, location.y - centerY);
+//		relocate(c.getCenterX(), c.getCenterY());
+//    }
+	
+	private Node createView() {
+		rect = new Rectangle();
+		rect.setX(500);
+		rect.setY(0);
+		rect.setWidth(10);
+		rect.setHeight(500);
+		rect.setFill(Color.GRAY);
+		//rect.setArcWidth(20);
+		//rect.setArcHeight(20);
+		return rect;
 	}
+	
 }

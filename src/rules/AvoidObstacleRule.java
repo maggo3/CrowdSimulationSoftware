@@ -26,6 +26,8 @@ public class AvoidObstacleRule extends Rule {
 			double d = path.distance();
 			if ( (d > 0) && (d < DISTANCE)) {
 				//Vector2D diff = Vector2D.substract(human.getLocation(), other.getLocation());
+				//double m = Utils.map(d, 0, Settings.AVOID_SLOW_DOWN_DISTANCE, 0, 2);
+				//path.multiply(m);
 				path.normalize();
 				path.div(d);
 				steer.add(path);
@@ -35,6 +37,9 @@ public class AvoidObstacleRule extends Rule {
 		if (count > 0) {
 			//steer.div(count);
 		}
+		//Vector2D.substract(steer, human.getVelocity());
+		//steer.limit(0.1);
+		//accel.add(steer);
 		return Vector2D.multScalar(steer, 1.0);
 	}
 
