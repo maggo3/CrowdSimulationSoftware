@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import rules.AimAttractorRule;
 import rules.AvoidObstacleRule;
+import rules.ObserveWorldRule;
 
 public class Main extends Application {
 	
@@ -33,6 +34,7 @@ public class Main extends Application {
 	private FlockManager flockManager;
 	private AnimationTimer animationTimer;
 	private long lastTime, diffTime;
+	private World w;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -118,7 +120,7 @@ public class Main extends Application {
 
 	private void setUpGame() {
 		//add World
-		World w = new World(playground);
+		w = new World(playground);
 		
         //add Attractors	
         for(int i = 0; i < Settings.ATTRACTOR_COUNT; i++) {
@@ -138,6 +140,7 @@ public class Main extends Application {
         //f1.addRule(new CohesionRule(200));
         //f1.addRule(new AlignmentRule());
         f1.addRule(new AvoidObstacleRule((int)Settings.AVOID_SLOW_DOWN_DISTANCE, allAvoids));
+        f1.addRule(new ObserveWorldRule(w));
         flockManager.add(f1);
         
 	}

@@ -5,6 +5,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 public class World extends Region {
 	
@@ -25,6 +26,10 @@ public class World extends Region {
 //        //relocate(location.x - centerX, location.y - centerY);
 //		relocate(c.getCenterX(), c.getCenterY());
 //    }
+	
+	public Shape getObject() {
+		return rect;
+	}
 	
 	private Node createView() {
 		rect = new Rectangle();
