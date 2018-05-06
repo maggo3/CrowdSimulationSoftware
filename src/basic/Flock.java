@@ -28,8 +28,8 @@ public class Flock {
 		double y = random.nextDouble() * playground.getHeight();
 		
 		//dimension
-		double width = 10; //50 for triangle
-        double height = 10; //width / 2.0; 
+		double width = 2; //50 for triangle
+        double height = 2; //width / 2.0; 
 
         //create human data
         Vector2D location = new Vector2D(x,y);

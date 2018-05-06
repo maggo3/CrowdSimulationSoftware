@@ -20,7 +20,7 @@ public class Human extends Sprite {
 	public Node createView() {
 		//return Utils.createArrowImageView( (int) width);
 		//size Human 0.5 minimun to see
-		c = new Circle(10, Color.BLUE);
+		c = new Circle(4, Color.BLUE);
 		return c;
 	}
 }

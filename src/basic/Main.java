@@ -17,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import rules.AimAttractorRule;
 import rules.AvoidObstacleRule;
+import rules.CohesionRule;
+import rules.KeepDistanceRule;
 import rules.ObserveWorldRule;
 
 public class Main extends Application {
@@ -134,13 +136,13 @@ public class Main extends Application {
         
         //add FlockManager
         flockManager = new FlockManager();
-        Flock f1 = new Flock(Settings.HUMAN_COUNT, playground);
+        Flock f1 = new Flock(20, playground);//Settings.HUMAN_COUNT
         f1.addRule(new AimAttractorRule(allAttractors.get(0)));
-        //f1.addRule(new KeepDistanceRule(50, f1));
-        //f1.addRule(new CohesionRule(200));
+        f1.addRule(new KeepDistanceRule(50, f1));
+        f1.addRule(new CohesionRule(200));
         //f1.addRule(new AlignmentRule());
         f1.addRule(new AvoidObstacleRule((int)Settings.AVOID_SLOW_DOWN_DISTANCE, allAvoids));
-        f1.addRule(new ObserveWorldRule(w));
+        //f1.addRule(new ObserveWorldRule(w));
         flockManager.add(f1);
         
 	}
