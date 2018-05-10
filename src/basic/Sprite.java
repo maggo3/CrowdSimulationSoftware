@@ -52,8 +52,8 @@ public abstract class Sprite extends Region {
 	}
 	
 	public void display() {
+		setRotate(Math.toDegrees(angle));
         relocate(location.x - centerX, location.y - centerY);
-        setRotate(Math.toDegrees(angle));
     }
 	
 	/*
