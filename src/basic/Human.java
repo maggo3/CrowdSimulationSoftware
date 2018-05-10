@@ -51,6 +51,7 @@ public class Human extends Sprite {
 		
 		g.getChildren().addAll(c, l1, l2);
 		
+		g.setRotate(90);
 		return g;
 	}
 }
