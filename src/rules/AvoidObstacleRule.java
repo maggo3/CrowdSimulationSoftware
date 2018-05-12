@@ -9,10 +9,10 @@ import basic.Vector2D;
 
 public class AvoidObstacleRule extends Rule {
 
-	private final int DISTANCE;
+	private final double DISTANCE;
 	private final List<Avoid> avoids;
 	
-	public AvoidObstacleRule(int distance, List<Avoid> allAvoids) {
+	public AvoidObstacleRule(double distance, List<Avoid> allAvoids) {
 		this.DISTANCE = distance;
 		this.avoids = allAvoids;
 	}

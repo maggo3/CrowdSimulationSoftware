@@ -7,9 +7,9 @@ import basic.Vector2D;
 
 public class CohesionRule extends Rule {
 	
-	private final int DISTANCE;
+	private final double DISTANCE;
 	
-	public CohesionRule(int distance) {
+	public CohesionRule(double distance) {
 		this.DISTANCE = distance;
 	}
 	
@@ -33,7 +33,7 @@ public class CohesionRule extends Rule {
 			sum.div(count);
 			Vector2D desired = Vector2D.substract(sum, human.getLocation());
 			desired.limit(0.05);
-			return Vector2D.multScalar(desired, 0.5);
+			return Vector2D.multScalar(desired, 1.0);
 		} else {
 			return new Vector2D(0,0);
 		}

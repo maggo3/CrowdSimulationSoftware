@@ -2,16 +2,15 @@ package rules;
 
 import java.util.ArrayList;
 
-import basic.Flock;
 import basic.Human;
 import basic.Vector2D;
 
 public class KeepDistanceRule extends Rule {
 
-	private final int DISTANCE;
+	private final double DISTANCE;
 	//private final Flock FLOCK;
 	
-	public KeepDistanceRule(int distance, Flock flock) {
+	public KeepDistanceRule(double distance) {
 		this.DISTANCE = distance;
 		//this.FLOCK = flock;
 	}
@@ -35,6 +34,6 @@ public class KeepDistanceRule extends Rule {
 		if (count > 0) {
 			//steer.div(count);
 		}
-		return Vector2D.multScalar(steer, 0.5);
+		return Vector2D.multScalar(steer, 1.0);
 	}
 }

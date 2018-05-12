@@ -16,5 +16,7 @@ public class Settings {
     public static double SPRITE_SLOW_DOWN_DISTANCE = 30; //100
     public static double AVOID_SLOW_DOWN_DISTANCE = 90; //100
 
-    
+    public static double KEEP_DISTANCE_DISTANCE = 50;
+    public static double COHESION_DISTANCE = 50;
+    public static double AVOID_OBSTACLE_DISTANCE = 90;
 }
