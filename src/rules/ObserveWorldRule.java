@@ -24,7 +24,7 @@ public class ObserveWorldRule extends Rule {
 		Shape intersect = Shape.intersect(h.getObject(), w.getObject());
         if (intersect.getBoundsInLocal().getWidth() != -1) {
             //collisionDetected = true;
-        	System.out.println("yes");
+        	//System.out.println("yes");
         	//w.getObject().setFill(Color.ALICEBLUE);
         	Vector2D vel = h.getVelocity();
         	h.setVelocity(Vector2D.multScalar(vel, 0));
