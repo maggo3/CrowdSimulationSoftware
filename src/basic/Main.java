@@ -38,6 +38,8 @@ public class Main extends Application {
 	private AnimationTimer animationTimer;
 	private long lastTime, diffTime;
 	private World w;
+	private Flock f1;
+	private AimAttractorRule aar;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -61,7 +63,7 @@ public class Main extends Application {
 				human.display();
 			}
 			allAttractors.forEach(a -> {
-				a.display();
+				//a.display();
 			});
 			
 			//listeners
@@ -78,6 +80,14 @@ public class Main extends Application {
 			mouseLocation.y = e.getY();
 			//System.out.println(mouseLocation);
 			
+			if ( allAttractors.size() > 0 ) {
+				f1.removeRule(aar);
+				allAttractors.get(0).removeFromDisplay();
+				allAttractors.remove(0);
+			}
+			addAttractors();
+			aar = new AimAttractorRule(allAttractors.get(0));
+			f1.addRule(aar);
 			allAttractors.get(0).setLocation(mouseLocation.x, mouseLocation.y);
 			//allAttractors.get(0).display();
 		});
@@ -125,10 +135,12 @@ public class Main extends Application {
 		//add World
 		w = new World(playground);
 		
-        //add Attractors	
+        //add Attractors
+		/*
         for(int i = 0; i < Settings.ATTRACTOR_COUNT; i++) {
             addAttractors();
         }
+        */
         
         //add Avoids
         for (int i = 0; i < Settings.AVOID_COUNT; i++) {
@@ -137,34 +149,13 @@ public class Main extends Application {
         
         //add FlockManager
         flockManager = new FlockManager();
-        Flock f1 = new Flock(Settings.HUMAN_COUNT * 2, playground);
-        
-        AimAttractorRule aar = new AimAttractorRule(allAttractors.get(0));
-        KeepDistanceRule kdr = new KeepDistanceRule(Settings.KEEP_DISTANCE_DISTANCE);
-        CohesionRule cr = new CohesionRule(Settings.COHESION_DISTANCE);
-        AvoidObstacleRule aor = new AvoidObstacleRule(Settings.AVOID_OBSTACLE_DISTANCE, allAvoids);
-        //ObserveWorldRule owr = new ObserveWorldRule(w);
-        //AlignmentRule ar = new AlignmentRule();
-        
-        aar.setWeight(1.0);
-        kdr.setWeight(0.5);
-        cr.setWeight(0.5);
-        aor.setWeight(1.0);
-        //owr.setWeight(weight);
-        //ar.setWeight(weight);
-        
-        f1.addRule(aar);
-        f1.addRule(kdr);
-        f1.addRule(cr);
-        f1.addRule(aor);
-        //f1.addRule(owr);
-        //f1.addRule(ar);
+        f1 = new Flock(Settings.HUMAN_COUNT * 50, playground);
         
         //f1.addRule(new AimAttractorRule(allAttractors.get(0)));
-        //f1.addRule(new KeepDistanceRule(Settings.KEEP_DISTANCE_DISTANCE));
-        //f1.addRule(new CohesionRule(Settings.COHESION_DISTANCE));
+        f1.addRule(new KeepDistanceRule(Settings.KEEP_DISTANCE_DISTANCE));
+        f1.addRule(new CohesionRule(Settings.COHESION_DISTANCE));
+        f1.addRule(new AvoidObstacleRule(Settings.AVOID_OBSTACLE_DISTANCE, allAvoids));
         //f1.addRule(new AlignmentRule());
-        //f1.addRule(new AvoidObstacleRule(Settings.AVOID_OBSTACLE_DISTANCE, allAvoids));
         //f1.addRule(new ObserveWorldRule(w));
         
         flockManager.add(f1);

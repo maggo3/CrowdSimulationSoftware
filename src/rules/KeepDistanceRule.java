@@ -34,6 +34,6 @@ public class KeepDistanceRule extends Rule {
 		if (count > 0) {
 			//steer.div(count);
 		}
-		return Vector2D.multScalar(steer, 1.0);
+		return Vector2D.multScalar(steer, 0.5);
 	}
 }

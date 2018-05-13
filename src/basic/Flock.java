@@ -73,4 +73,8 @@ public class Flock {
 	public void addRule(Rule r) {
 		rules.add(r);
 	}
+	
+	public void removeRule(Rule r) {
+		rules.remove(r);
+	}
 }

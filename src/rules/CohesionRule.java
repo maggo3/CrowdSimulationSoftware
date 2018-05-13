@@ -33,7 +33,7 @@ public class CohesionRule extends Rule {
 			sum.div(count);
 			Vector2D desired = Vector2D.substract(sum, human.getLocation());
 			desired.limit(0.05);
-			return Vector2D.multScalar(desired, 1.0);
+			return Vector2D.multScalar(desired, 0.5);
 		} else {
 			return new Vector2D(0,0);
 		}

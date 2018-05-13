@@ -2,6 +2,7 @@ package basic;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
+import javafx.scene.transform.Rotate;
 
 public abstract class Sprite extends Region {
 	
@@ -52,8 +53,11 @@ public abstract class Sprite extends Region {
 	}
 	
 	public void display() {
-		setRotate(Math.toDegrees(angle));
         relocate(location.x - centerX, location.y - centerY);
+        Rotate r = new Rotate(Math.toDegrees(angle), 0,0);
+        getTransforms().setAll(r);
+        //setRotate(Math.toDegrees(angle)); //Math.toDegrees(angle)
+        //System.out.println(Math.toDegrees(angle));
     }
 	
 	/*

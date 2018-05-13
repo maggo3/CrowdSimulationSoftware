@@ -5,6 +5,9 @@ import javafx.scene.shape.Circle;
 
 public class Attractor extends Sprite {
 
+	private Circle c;
+	
+	
 	public Attractor(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration, double width,
 			double height) {
 		super(layer, location, velocity, acceleration, width, height);
@@ -12,10 +15,14 @@ public class Attractor extends Sprite {
 
 	@Override
 	public Node createView() {
-		Circle c = new Circle(10);
+		c = new Circle(10);
 		c.setStroke(Color.GREEN);
         c.setFill(Color.GREEN.deriveColor(1, 1, 1, 0.3));
 		return c;
+	}
+
+	public void removeFromDisplay() {
+		getChildren().remove(c);
 	}
 
 }
