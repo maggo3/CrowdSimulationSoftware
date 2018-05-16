@@ -157,7 +157,6 @@ public class Main extends Application {
         f1.addRule(new AvoidObstacleRule(Settings.AVOID_OBSTACLE_DISTANCE, allAvoids));
         //f1.addRule(new ObserveWorldRule(w));
         //f1.addRule(new AlignmentRule());
-        //test
         
         flockManager.add(f1);
         
