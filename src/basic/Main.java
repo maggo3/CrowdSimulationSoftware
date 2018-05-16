@@ -149,7 +149,7 @@ public class Main extends Application {
         
         //add FlockManager
         flockManager = new FlockManager();
-        f1 = new Flock(Settings.HUMAN_COUNT / 5, playground);
+        f1 = new Flock(Settings.HUMAN_COUNT * 50 , playground);
         
         //f1.addRule(new AimAttractorRule(allAttractors.get(0)));
         f1.addRule(new KeepDistanceRule(Settings.KEEP_DISTANCE_DISTANCE));
