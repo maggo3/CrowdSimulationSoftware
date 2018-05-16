@@ -41,6 +41,12 @@ public class Main extends Application {
 	private Flock f1;
 	private AimAttractorRule aar;
 	
+	private int n = 10, m = 10;
+	private double gridWidth = Settings.SCENE_WIDTH/n;
+	private double gridHeight = Settings.SCENE_HEIGHT/m;
+	int[][] playfield = new int[n][m];
+	private ArrayList<Cell> cells;
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -135,6 +141,20 @@ public class Main extends Application {
 		//add World
 		w = new World(playground);
 		
+		//initialize playfield
+		int counter = 0;
+		cells = new ArrayList<Cell>();
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                // create node
+            	Layer l = playground;
+                Cell cell = new Cell(l, "Cell " + i + "/" + j, counter,  i * gridWidth, j * gridHeight, gridWidth, gridHeight);
+                // add to playfield for further reference using an array
+                playfield[i][j] = counter;
+                counter++;
+                cells.add(cell);
+            }
+        }
         //add Attractors
 		/*
         for(int i = 0; i < Settings.ATTRACTOR_COUNT; i++) {
@@ -149,7 +169,7 @@ public class Main extends Application {
         
         //add FlockManager
         flockManager = new FlockManager();
-        f1 = new Flock(Settings.HUMAN_COUNT * 50 , playground);
+        f1 = new Flock(Settings.HUMAN_COUNT / 10 , playground, cells);
         
         //f1.addRule(new AimAttractorRule(allAttractors.get(0)));
         f1.addRule(new KeepDistanceRule(Settings.KEEP_DISTANCE_DISTANCE));

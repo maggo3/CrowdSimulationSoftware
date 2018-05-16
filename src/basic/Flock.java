@@ -10,9 +10,11 @@ public class Flock {
 	private ArrayList<Rule> rules;
 	private static Random random = new Random();
 	private Layer playground;
+	private ArrayList<Cell> cells;
 	
-	public Flock(int flockSize, Layer l) {
+	public Flock(int flockSize, Layer l, ArrayList<Cell> grid) {
 		this.playground = l;
+		this.cells = grid;
 		flock = new ArrayList<Human>();
 		rules = new ArrayList<Rule>();
 		for( int i = 0; i < flockSize; i++) { 
@@ -46,7 +48,11 @@ public class Flock {
 	public void update() {
 		for ( Human h : flock) {
 			//h.seek(new Vector2D(200,200));
-			calculateVelocity(h);
+			manageCells(h);
+			ArrayList<Cell> nearCells = getCellsFromHumanPosition(h.getLocation());
+			for (Cell c : nearCells) {
+				calculateVelocity(h, c);
+			}
 			//limiSpeed(h);
 		}
 		for ( Human h : flock) {
@@ -55,6 +61,28 @@ public class Flock {
 		}
 	}
 	
+	private void manageCells(Human h) {
+		for (Cell c : cells) {
+			if (c.has(h.getLocation())) {
+				if(!c.getHumans().contains(h)) {
+					c.addHuman(h);
+					System.out.println("now Add");
+				}
+			} else {
+				if( c.getHumans().contains(h)) {
+					if (c.getHumans().size() > 0) 
+						c.removeHuman(h);
+						System.out.println("now Remove");
+				}
+			}
+		}
+	}
+
+	private ArrayList<Cell> getCellsFromHumanPosition(Vector2D location) {
+		
+		return cells;
+	}
+
 	/*
 	private void limiSpeed(Human h) {
 		// TODO Auto-generated method stub
@@ -62,10 +90,10 @@ public class Flock {
 	}
 	*/
 
-	private void calculateVelocity(Human h) {
+	private void calculateVelocity(Human h, Cell cell) {
 		Vector2D change = new Vector2D(0,0);
 		for (Rule r : rules) {
-			change.add(r.getChangeVector(h, flock)); 
+			change.add(r.getChangeVector(h, cell.getHumans())); 
 		}
 		h.addVelocity(change);
 	}
